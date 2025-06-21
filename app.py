@@ -1,7 +1,12 @@
 from flask import Flask, render_template, request, jsonify
+from dotenv import load_dotenv
 import sqlite3
+import os
 
 app = Flask(__name__)
+load_dotenv()
+
+GOOGLE_MAPS_API_KEY=os.getenv("MY_API_KEY")
 
 # Initialize DB
 def init_db():
@@ -19,7 +24,7 @@ def init_db():
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', api_key=GOOGLE_MAPS_API_KEY)
 
 @app.route('/save-location', methods=['POST'])
 def save_location():
