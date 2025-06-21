@@ -1,14 +1,33 @@
 let map;
+let activeCircle = null;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: 43.6532, lng: -79.3832 },
-        zoom: 14,
+        center: { lat: 43.6532, lng: -79.3832 }, //Downtown Toronto
+        zoom: 13,
     });
 
     map.addListener("click", async (e) => {
         const lat = e.latLng.lat();
         const lng = e.latLng.lng();
+
+
+
+        if (activeCircle){
+            activeCircle.setMap(null);
+        }
+
+
+        activeCircle = new google.maps.Circle({
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.4,
+            strokeWeight:1,
+            fillColor: "#FF0000",
+            fillOpacity: 0.35,
+            map,
+            center: {lat,lng},
+            radius: 1000, //1km
+        });
 
         // Save to backend
         fetch('/save-location', {
