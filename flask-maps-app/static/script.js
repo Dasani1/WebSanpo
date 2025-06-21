@@ -10,7 +10,7 @@ function initMap() {
         const lat = e.latLng.lat();
         const lng = e.latLng.lng();
 
-        fetch('/save-location', {
+        fetch('/save-location', {   
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
