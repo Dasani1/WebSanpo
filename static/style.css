@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000000;
+    color: #cdcdcd;
+}
+
+h1 {
+    text-align: center;
+    padding: 1rem;
+    background-color: #ff0000;
+    color: rgb(0, 0, 0);
+    margin: 0;
+    font-size: 1.8rem;
+}
+h3 {
+    text-align: center;
+    padding: 1rem;
+    background-color: #ff0000;
+    color: rgb(189, 188, 188);
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+#map {
+    height: 500px;
+    width: 90%;
+    margin: 20px auto;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(226, 226, 226, 0.1);
+}
+
+#output {
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}

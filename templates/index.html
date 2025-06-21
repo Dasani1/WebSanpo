@@ -2,11 +2,14 @@
 <html>
 <head>
     <title>WebSanpo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Select a location</h1>
+    <h1>Welcome to WebSampo!</h1>
+    <h3>Select a location</h3>
     <div id="map" style="height: 500px; width: 100%;"></div>
     <p id="output"></p>
+
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA-oTktUqLA-rlmT2PEeqNgg3w41Y9wMw&callback=initMap"></script>
 </body>
