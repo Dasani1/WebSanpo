@@ -1,19 +1,15 @@
 // fetchOverpassData.js
 
-async function fetchOverpassData(lat, lng, radius = 1000) {
+async function fetchOverpassData(lat, lng, radius) {
     console.log("Fetching Overpass data for:", lat, lng);
     console.log("Querying Overpass API…");
     const query = `
     [out:json];
     (
-    // More reliable footways
-    way["highway"="footway"](around:1000, ${lat}, ${lng});
-    way["highway"="path"]["foot"="yes"](around:1000, ${lat}, ${lng});
-    
     // Supermarkets (usually reliable)
     node["shop"="supermarket"](around:1000, ${lat}, ${lng});
 
-    // Restaurants — only those with at least one name tag
+    // Restaurants (at least one tag)
     node["amenity"="restaurant"]["name"](around:1000, ${lat}, ${lng});
 
     // Parks — include ways + nodes
