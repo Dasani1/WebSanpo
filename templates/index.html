@@ -9,10 +9,19 @@
     <h3>Please select a location.</h3>
     <div id="map" style="height: 500px; width: 100%;"></div>
     <p id="output"></p>
-    <input type="range" min="100" max="2000" step="100" class="slider" id="radSize" value="1000">
-    <input type="range" min="0" max="1" step="0.05" class="slider" id="restprio" value="1">
-    <input type="range" min="0" max="1" step="0.05" class="slider" id="supeprio" value="1">
-    <input type="range" min="0" max="1" step="0.05" class="slider" id="parkprio" value="1">
+    <div class="slides">
+        <label for="radSize">Radius Sizing (100-2000m)</label>
+        <input type="range" min="100" max="2000" step="100" class="slider" id="radSize" value="1000">
+
+        <label for="restprio">Restaurant Weighting (0-100%)</label>
+        <input type="range" min="0" max="1" step="0.05" class="slider" id="restprio" value="1">
+
+        <label for="supeprio">Supermarket Weighting (0-100%)</label>
+        <input type="range" min="0" max="1" step="0.05" class="slider" id="supeprio" value="1">
+
+        <label for="parkprio">Park Weighting (0-100%)</label>
+        <input type="range" min="0" max="1" step="0.05" class="slider" id="parkprio" value="1">
+    </div>
     <script src="{{ url_for('static', filename='fetchOverpassData.js') }}"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ api_key }}&callback=initMap" async defer></script>
