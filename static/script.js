@@ -3,11 +3,11 @@ let activeCircle = null;
 let rad = 1000;
 let Colour = "#FF0000"; //Canadian Spelling only
 
-let setRad, setRest, setMark, setPark; // new
+let setRad, setRest, setMark, setPark; 
 let latestCategories = null;
 let latestLatLng = null;
 
-let isEnabled = true; //vibe
+let isEnabled = true; 
 
 const categoryColors = {
     restaurant: "red",
@@ -15,32 +15,32 @@ const categoryColors = {
     park: "green"
 };
 
-function updateScoreAndCircle() { // new
-    if (!latestCategories || !latestLatLng) return; // new
+function updateScoreAndCircle() { 
+    if (!latestCategories || !latestLatLng) return; 
 
-    const restVal = isNaN(parseFloat(setRest?.value)) ? 1 : parseFloat(setRest.value); // fixed
-    const markVal = isNaN(parseFloat(setMark?.value)) ? 1 : parseFloat(setMark.value); // fixed
+    const restVal = isNaN(parseFloat(setRest?.value)) ? 1 : parseFloat(setRest.value); 
+    const markVal = isNaN(parseFloat(setMark?.value)) ? 1 : parseFloat(setMark.value); 
     const parkVal = isNaN(parseFloat(setMark?.value)) ? 1 : parseFloat(setPark.value);
 
 
-    const score = (latestCategories.supermarket * markVal) + // new
-                  (latestCategories.restaurant * restVal) + // new
-                  (latestCategories.park * parkVal); // new
+    const score = (latestCategories.supermarket * markVal) + 
+                  (latestCategories.restaurant * restVal) + 
+                  (latestCategories.park * parkVal); 
 
-    Colour = score >= 50 ? "#00FF00" : "#FF0000"; // new
+    Colour = score >= 50 ? "#00FF00" : "#FF0000"; 
 
-    if (activeCircle) activeCircle.setMap(null); // new
+    if (activeCircle) activeCircle.setMap(null); 
 
-    activeCircle = new google.maps.Circle({ // new
-        strokeColor: Colour, // new
-        strokeOpacity: 0.4, // new
-        strokeWeight: 1, // new
-        fillColor: Colour, // new
-        fillOpacity: 0.35, // new
-        map, // new
-        center: latestLatLng, // new
-        radius: rad // new
-    }); // new
+    activeCircle = new google.maps.Circle({ 
+        strokeColor: Colour, 
+        strokeOpacity: 0.4, 
+        strokeWeight: 1, 
+        fillColor: Colour, 
+        fillOpacity: 0.35, 
+        map, 
+        center: latestLatLng, 
+        radius: rad 
+    }); 
 
     document.getElementById("output").innerHTML = ` 
         <p>Found <strong>${Object.values(latestCategories).reduce((a, b) => a + b)}</strong> walkability-related locations:</p> 
@@ -50,14 +50,14 @@ function updateScoreAndCircle() { // new
             <li><span style="color: green;">• Parks (×${parkVal}):</span> ${latestCategories.park}</li>
         </ul> 
         <p><strong>→ Weighted Walkability Score:</strong> ${score.toFixed(2)}</p> 
-    `; // new
-} // new
+    `; 
+} 
 
 function initMap() {
     // Assign slider variables after DOM is ready
-    setRad = document.getElementById("radSize"); // new
-    setRest = document.getElementById("restprio"); // new
-    setMark = document.getElementById("supeprio"); // new
+    setRad = document.getElementById("radSize"); 
+    setRest = document.getElementById("restprio"); 
+    setMark = document.getElementById("supeprio"); 
     setPark = document.getElementById("parkprio");
 
     setRad.addEventListener("input", () => {
@@ -145,16 +145,16 @@ function initMap() {
             }
         });
 
-        latestCategories = categories; // new
-        latestLatLng = { lat, lng }; // new
-        updateScoreAndCircle(); // new
+        latestCategories = categories; 
+        latestLatLng = { lat, lng }; 
+        updateScoreAndCircle(); 
     });
 
-    // Add live update listeners
-    setRest.addEventListener("input", updateScoreAndCircle); // new
-    setMark.addEventListener("input", updateScoreAndCircle); // new
+
+    setRest.addEventListener("input", updateScoreAndCircle); 
+    setMark.addEventListener("input", updateScoreAndCircle); 
     setPark.addEventListener("input", updateScoreAndCircle);
 }
 
-// Expose globally for Google Maps callback
+
 window.initMap = initMap;
