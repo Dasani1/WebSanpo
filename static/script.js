@@ -3,13 +3,59 @@ let activeCircle = null;
 let rad = 1000;
 let Colour = "#FF0000"; //Canadian Spelling only
 
+let setRad, setRest, setMark; // new
+let latestCategories = null;
+let latestLatLng = null;
+
 const categoryColors = {
     restaurant: "red",
     supermarket: "blue",
     park: "green"
 };
 
+function updateScoreAndCircle() { // new
+    if (!latestCategories || !latestLatLng) return; // new
+
+    const restVal = isNaN(parseFloat(setRest?.value)) ? 1 : parseFloat(setRest.value); // fixed
+    const markVal = isNaN(parseFloat(setMark?.value)) ? 1 : parseFloat(setMark.value); // fixed
+
+
+    const score = (latestCategories.supermarket * markVal) + // new
+                  (latestCategories.restaurant * restVal) + // new
+                  (latestCategories.park); // new
+
+    Colour = score > 10 ? "#00FF00" : "#FF0000"; // new
+
+    if (activeCircle) activeCircle.setMap(null); // new
+
+    activeCircle = new google.maps.Circle({ // new
+        strokeColor: Colour, // new
+        strokeOpacity: 0.4, // new
+        strokeWeight: 1, // new
+        fillColor: Colour, // new
+        fillOpacity: 0.35, // new
+        map, // new
+        center: latestLatLng, // new
+        radius: rad // new
+    }); // new
+
+    document.getElementById("output").innerHTML = ` 
+        <p>Found <strong>${Object.values(latestCategories).reduce((a, b) => a + b)}</strong> walkability-related locations:</p> 
+        <ul style="list-style: none; padding: 0;"> 
+            <li><span style="color: blue;">• Supermarkets (×${markVal}):</span> ${latestCategories.supermarket}</li> 
+            <li><span style="color: red;">• Restaurants (×${restVal}):</span> ${latestCategories.restaurant}</li> 
+            <li>Parks: ${latestCategories.park}</li> 
+        </ul> 
+        <p><strong>→ Weighted Walkability Score:</strong> ${score.toFixed(2)}</p> 
+    `; // new
+} // new
+
 function initMap() {
+    // Assign slider variables after DOM is ready
+    setRad = document.getElementById("radSize"); // new
+    setRest = document.getElementById("restprio"); // new
+    setMark = document.getElementById("supeprio"); // new
+
     map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 43.6532, lng: -79.3832 }, // Downtown Toronto
         zoom: 13,
@@ -30,22 +76,18 @@ function initMap() {
             activeCircle.setMap(null);
         }
 
-       
-
         // Save location to backend
         fetch('/save-location', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ lat, lng })
+            body: JSON.stringify({ lat, lng})
         });
 
-        // Update UI
         document.getElementById("output").innerText =
             `Fetching walkability data for: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
 
-        // Fetch OSM data
         const results = await fetchOverpassData(lat, lng, rad);
 
         const categories = {
@@ -92,36 +134,15 @@ function initMap() {
             }
         });
 
-        const score =  categories.supermarket + categories.restaurant + categories.park;
-        if (score > 10){
-            Colour = "#00FF00";
-        }
-        else{
-            Colour = "#FF0000";
-        }
-        
-    // Draw a red circle around the clicked location
-            activeCircle = new google.maps.Circle({
-                strokeColor: Colour,
-                strokeOpacity: 0.4,
-                strokeWeight: 1,
-                fillColor: Colour,
-                fillOpacity: 0.35,
-                map,
-                center: { lat, lng },
-                radius: rad, // Radius variable
-            });
-        document.getElementById("output").innerHTML = `
-        <p>Found <strong>${results.length}</strong> walkability-related locations:</p>
-        <ul style="list-style: none; padding: 0;">
-            <li><span style="color: blue;">• Supermarkets:</span> ${categories.supermarket}</li>
-            <li><span style="color: red;">• Restaurants:</span> ${categories.restaurant}</li>
-            <li>Parks: ${categories.park}</li>
-        </ul>
-        <p><strong>→ Walkability Score:</strong> ${score}</p>
-    `;
+        latestCategories = categories; // new
+        latestLatLng = { lat, lng }; // new
+        updateScoreAndCircle(); // new
     });
+
+    // Add live update listeners
+    setRest.addEventListener("input", updateScoreAndCircle); // new
+    setMark.addEventListener("input", updateScoreAndCircle); // new
 }
+
 // Expose globally for Google Maps callback
 window.initMap = initMap;
-
