@@ -2,11 +2,13 @@
 <html>
 <head>
     <title>Web-Sanpo</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='logo.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <img src="{{ url_for('static', filename='logo.png') }}" id="top-icon" alt="WebSanpo Icon">
     <h1>Welcome to Web-Sanpo!</h1>
-    <h3>Please select a location to see how Walkable it is! (50+ is determined Walkable)</h3>
+    <h3>Please select a location to see its walkability score!</h3>
     <div id="map" style="height: 500px; width: 100%;"></div>
     <p id="output"></p>
     <div class="slides">
