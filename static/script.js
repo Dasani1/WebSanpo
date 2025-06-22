@@ -62,8 +62,7 @@ function initMap() {
 
     setRad.addEventListener("input", () => {
     rad = parseFloat(setRad.value);
-    document.getElementById("radVal").innerText = rad; // ⬅️ live update
-    updateScoreAndCircle(); // optional if you want circle to resize live
+    document.getElementById("radVal").innerText = rad; 
     });
 
 
