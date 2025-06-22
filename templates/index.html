@@ -6,11 +6,11 @@
 </head>
 <body>
     <h1>Welcome to Web-Sanpo!</h1>
-    <h3>Please select a location.</h3>
+    <h3>Please select a location to see how Walkable it is! (50+ is determined Walkable)</h3>
     <div id="map" style="height: 500px; width: 100%;"></div>
     <p id="output"></p>
     <div class="slides">
-        <label for="radSize">Radius Sizing (100-2000m)</label>
+        <label for="radSize">Radius Sizing (100-2000m)<span id="radVal"> 1000 </span>m</label>
         <input type="range" min="100" max="2000" step="100" class="slider" id="radSize" value="1000">
 
         <label for="restprio">Restaurant Weighting (0-100%)</label>

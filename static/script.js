@@ -27,7 +27,7 @@ function updateScoreAndCircle() { // new
                   (latestCategories.restaurant * restVal) + // new
                   (latestCategories.park * parkVal); // new
 
-    Colour = score > 10 ? "#00FF00" : "#FF0000"; // new
+    Colour = score >= 50 ? "#00FF00" : "#FF0000"; // new
 
     if (activeCircle) activeCircle.setMap(null); // new
 
@@ -60,9 +60,12 @@ function initMap() {
     setMark = document.getElementById("supeprio"); // new
     setPark = document.getElementById("parkprio");
 
-    setRad.addEventListener("input", ()=> {
-        rad = parseFloat(setRad.value);
+    setRad.addEventListener("input", () => {
+    rad = parseFloat(setRad.value);
+    document.getElementById("radVal").innerText = rad; // ⬅️ live update
+    updateScoreAndCircle(); // optional if you want circle to resize live
     });
+
 
     map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 43.6532, lng: -79.3832 }, // Downtown Toronto
