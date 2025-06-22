@@ -1,20 +1,20 @@
 // fetchOverpassData.js
 
 async function fetchOverpassData(lat, lng, radius) {
-    console.log("Fetching Overpass data for:", lat, lng);
+    console.log("Fetching Overpass data for:", lat, lng, "with radius:", radius);
     console.log("Querying Overpass API…");
     const query = `
     [out:json];
     (
     // Supermarkets (usually reliable)
-    node["shop"="supermarket"](around:1000, ${lat}, ${lng});
+    node["shop"="supermarket"](around:${radius}, ${lat}, ${lng});
 
     // Restaurants (at least one tag)
-    node["amenity"="restaurant"]["name"](around:1000, ${lat}, ${lng});
+    node["amenity"="restaurant"]["name"](around:${radius}, ${lat}, ${lng});
 
     // Parks — include ways + nodes
-    node["leisure"="park"](around:1000, ${lat}, ${lng});
-    way["leisure"="park"](around:1000, ${lat}, ${lng});
+    node["leisure"="park"](around:${radius}, ${lat}, ${lng});
+    way["leisure"="park"](around:${radius}, ${lat}, ${lng});
     );
     out body;
     `;

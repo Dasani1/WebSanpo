@@ -7,6 +7,8 @@ let setRad, setRest, setMark; // new
 let latestCategories = null;
 let latestLatLng = null;
 
+let isEnabled = true; //vibe
+
 const categoryColors = {
     restaurant: "red",
     supermarket: "blue",
@@ -55,6 +57,10 @@ function initMap() {
     setRad = document.getElementById("radSize"); // new
     setRest = document.getElementById("restprio"); // new
     setMark = document.getElementById("supeprio"); // new
+
+    setRad.addEventListener("input", ()=> {
+        rad = parseFloat(setRad.value);
+    });
 
     map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 43.6532, lng: -79.3832 }, // Downtown Toronto
