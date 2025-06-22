@@ -1,6 +1,7 @@
 let map;
 let activeCircle = null;
 let rad = 1000;
+let Colour = "#FF0000"; //Canadian Spelling only
 
 const categoryColors = {
     restaurant: "red",
@@ -29,17 +30,7 @@ function initMap() {
             activeCircle.setMap(null);
         }
 
-        // Draw a red circle around the clicked location
-        activeCircle = new google.maps.Circle({
-            strokeColor: "#FF0000",
-            strokeOpacity: 0.4,
-            strokeWeight: 1,
-            fillColor: "#FF0000",
-            fillOpacity: 0.35,
-            map,
-            center: { lat, lng },
-            radius: 1000, // 1 km radius
-        });
+       
 
         // Save location to backend
         fetch('/save-location', {
@@ -102,7 +93,24 @@ function initMap() {
         });
 
         const score =  categories.supermarket + categories.restaurant + categories.park;
-
+        if (score > 10){
+            Colour = "#00FF00";
+        }
+        else{
+            Colour = "#FF0000";
+        }
+        
+    // Draw a red circle around the clicked location
+            activeCircle = new google.maps.Circle({
+                strokeColor: Colour,
+                strokeOpacity: 0.4,
+                strokeWeight: 1,
+                fillColor: Colour,
+                fillOpacity: 0.35,
+                map,
+                center: { lat, lng },
+                radius: rad, // Radius variable
+            });
         document.getElementById("output").innerHTML = `
         <p>Found <strong>${results.length}</strong> walkability-related locations:</p>
         <ul style="list-style: none; padding: 0;">
