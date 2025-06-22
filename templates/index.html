@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>WebSanpo</title>
+    <title>Web-Sanpo</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Welcome to WebSanpo!</h1>
+    <h1>Welcome to Web-Sanpo!</h1>
     <h3>Please select a location.</h3>
     <div id="map" style="height: 500px; width: 100%;"></div>
     <p id="output"></p>
-    <input type="range" min="100" max="1200" step="100" class="slider" id="radSize" value="1000">
+    <input type="range" min="100" max="2000" step="100" class="slider" id="radSize" value="1000">
     <input type="range" min="0" max="1" step="0.05" class="slider" id="restprio" value="1">
     <input type="range" min="0" max="1" step="0.05" class="slider" id="supeprio" value="1">
+    <input type="range" min="0" max="1" step="0.05" class="slider" id="parkprio" value="1">
     <script src="{{ url_for('static', filename='fetchOverpassData.js') }}"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key={{ api_key }}&callback=initMap" async defer></script>

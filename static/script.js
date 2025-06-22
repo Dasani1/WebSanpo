@@ -3,7 +3,7 @@ let activeCircle = null;
 let rad = 1000;
 let Colour = "#FF0000"; //Canadian Spelling only
 
-let setRad, setRest, setMark; // new
+let setRad, setRest, setMark, setPark; // new
 let latestCategories = null;
 let latestLatLng = null;
 
@@ -20,11 +20,12 @@ function updateScoreAndCircle() { // new
 
     const restVal = isNaN(parseFloat(setRest?.value)) ? 1 : parseFloat(setRest.value); // fixed
     const markVal = isNaN(parseFloat(setMark?.value)) ? 1 : parseFloat(setMark.value); // fixed
+    const parkVal = isNaN(parseFloat(setMark?.value)) ? 1 : parseFloat(setPark.value);
 
 
     const score = (latestCategories.supermarket * markVal) + // new
                   (latestCategories.restaurant * restVal) + // new
-                  (latestCategories.park); // new
+                  (latestCategories.park * parkVal); // new
 
     Colour = score > 10 ? "#00FF00" : "#FF0000"; // new
 
@@ -46,7 +47,7 @@ function updateScoreAndCircle() { // new
         <ul style="list-style: none; padding: 0;"> 
             <li><span style="color: blue;">• Supermarkets (×${markVal}):</span> ${latestCategories.supermarket}</li> 
             <li><span style="color: red;">• Restaurants (×${restVal}):</span> ${latestCategories.restaurant}</li> 
-            <li>Parks: ${latestCategories.park}</li> 
+            <li><span style="color: green;">• Parks (×${parkVal}):</span> ${latestCategories.park}</li>
         </ul> 
         <p><strong>→ Weighted Walkability Score:</strong> ${score.toFixed(2)}</p> 
     `; // new
@@ -57,6 +58,7 @@ function initMap() {
     setRad = document.getElementById("radSize"); // new
     setRest = document.getElementById("restprio"); // new
     setMark = document.getElementById("supeprio"); // new
+    setPark = document.getElementById("parkprio");
 
     setRad.addEventListener("input", ()=> {
         rad = parseFloat(setRad.value);
@@ -148,6 +150,7 @@ function initMap() {
     // Add live update listeners
     setRest.addEventListener("input", updateScoreAndCircle); // new
     setMark.addEventListener("input", updateScoreAndCircle); // new
+    setPark.addEventListener("input", updateScoreAndCircle);
 }
 
 // Expose globally for Google Maps callback
